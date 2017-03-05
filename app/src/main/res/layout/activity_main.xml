@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
 
     android:layout_height="match_parent"
-    tools:context="com.lixuebo.bobo.vm.MainActivity">
+    tools:context="com.lixuebo.bobo.vm.activity.MainActivity">
 
 
 
