@@ -1,8 +1,8 @@
 package com.lixuebo.bobo.vm.fragment;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,39 +11,59 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.lixuebo.bobo.R;
+import com.lixuebo.bobo.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by itheima.
- * 首页
+ *
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
     // 展示RecyclerView
     private RecyclerView recyclerView;
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, null);
+        View view = inflater.inflate(R.layout.fragment_container, null);
+
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        super.onViewCreated(view,savedInstanceState);
+        //recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        recyclerView = (RecyclerView) View.inflate(UIUtils.getContext(), R.layout.pager_recyclerview, null);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, false));
-
-        testData();
+        dynamic();
         recyclerView.setAdapter(new HomeAdapter());
+
+    }
+
+    @Override
+    protected void showSuccessView() {
+        changeViewTo(recyclerView);
     }
 
 
     private List<String> mDatas;
 
-    private void testData() {
+    protected void loadData() {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+
+
+                SystemClock.sleep(2000);
+
+                handler.sendEmptyMessage(10);
+
+            }
+        }.start();
+
         mDatas = new ArrayList<String>();
         for (int i = 'A'; i < 'z'; i++) {
             mDatas.add("" + (char) i);
